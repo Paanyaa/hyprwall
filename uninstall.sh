@@ -32,20 +32,21 @@ if [ -d "$Target_dir" ]; then
     echo -e "${YELLOW}Removed $Target_dir${NC}"
 fi
 
-# Replace live wallpaper startup line with direct mpvpaper call for minecraft.mp4 on eDP-2
+# Replace live wallpaper startup line with direct mpvpaper call
+LIVE_SECTION="# live wallpaper stuff"
 STARTUP_LINE="exec-once = $HOME/.hyprwall/run_wallpaper.sh"
-REPLACEMENT_LINE="#exec-once = mpvpaper -o \"load-scripts=no no-audio --loop\" eDP-2 Videos/minecraft.mp4"
+REPLACEMENT_LINE="exec-once = mpvpaper -o \"load-scripts=no no-audio --loop\" eDP-2 Videos/minecraft.mp4"
 
 if grep -Fxq "$STARTUP_LINE" "$STARTUP_FILE"; then
     sed -i "s|$STARTUP_LINE|$REPLACEMENT_LINE|" "$STARTUP_FILE"
-    echo -e "${GREEN}Replaced run_wallpaper.sh with direct mpvpaper startup line (on eDP-2)${NC}"
+    echo -e "${GREEN}Replaced run_wallpaper.sh with direct mpvpaper startup line${NC}"
 fi
 
-# Remove the keybind line from Keybinds.conf
-KEYBIND_LINE="bind = \$mainMod CTRL, W, exec, /usr/local/bin/toggle-live-wallpaper"
-if grep -Fxq "$KEYBIND_LINE" "$KEYBINDS_FILE"; then
-    sed -i "\|$KEYBIND_LINE|d" "$KEYBINDS_FILE"
-    echo -e "${YELLOW}Removed toggle-live-wallpaper keybind${NC}"
+# Remove live-wallpaper keybinding section
+KEYBIND_SECTION="# live-wallpaper-keybinding"
+if grep -Fxq "$KEYBIND_SECTION" "$KEYBINDS_FILE"; then
+    sed -i "/$KEYBIND_SECTION/,+1d" "$KEYBINDS_FILE"
+    echo -e "${YELLOW}Removed live-wallpaper keybinding section${NC}"
 fi
 
 # Remove toggle-live-wallpaper from /usr/local/bin
