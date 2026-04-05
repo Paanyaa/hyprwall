@@ -1,18 +1,28 @@
 #!/bin/bash
 
 # Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
 
 Target_dir="$HOME/.hyprwall"
-STARTUP_FILE="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
-KEYBINDS_FILE="$HOME/.config/hypr/UserConfigs/UserKeybinds.conf"
 Clone_dir="$HOME/hyprwall"
 
 echo -e "${CYAN}Starting Hyprwall uninstall...${NC}"
+
+# Ask user which config layout to use
+echo -e "${YELLOW}Select config layout:${NC}"
+echo "1) UserConfigs (old installation)"
+echo "2) System defaults (new installation)"
+read -p "Enter choice [1/2]: " choice
+
+if [[ "$choice" == "1" ]]; then
+    STARTUP_FILE="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
+    KEYBINDS_FILE="$HOME/.config/hypr/UserConfigs/UserKeybinds.conf"
+    echo -e "${GREEN}Using UserConfigs paths${NC}"
+else
+    STARTUP_FILE="$HOME/.config/hypr/configs/Startup_Apps.conf"
+    KEYBINDS_FILE="$HOME/.config/hypr/config/Keybinds.conf"
+    echo -e "${GREEN}Using System default paths${NC}"
+fi
 
 # Remove ~/.hyprwall directory
 if [ -d "$Target_dir" ]; then
@@ -29,7 +39,7 @@ if grep -Fxq "$STARTUP_LINE" "$STARTUP_FILE"; then
     echo -e "${GREEN}Replaced run_wallpaper.sh with direct mpvpaper startup line (on eDP-2)${NC}"
 fi
 
-# Remove the keybind line from UserKeybinds.conf
+# Remove the keybind line from Keybinds.conf
 KEYBIND_LINE="bind = \$mainMod CTRL, W, exec, /usr/local/bin/toggle-live-wallpaper"
 if grep -Fxq "$KEYBIND_LINE" "$KEYBINDS_FILE"; then
     sed -i "\|$KEYBIND_LINE|d" "$KEYBINDS_FILE"
@@ -57,8 +67,8 @@ echo -e "to keep minecraft.mp4 running as wallpaper even after uninstall."
 echo -e "${CYAN}--------------------------------------------------${NC}"
 
 # Ask user if they want to reboot
-read -p "Do you want to reboot now? (y/n): " choice
-if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+read -p "Do you want to reboot now? (y/n): " reboot_choice
+if [[ "$reboot_choice" == "y" || "$reboot_choice" == "Y" ]]; then
     echo -e "${RED}Rebooting system...${NC}"
     sudo reboot
 else

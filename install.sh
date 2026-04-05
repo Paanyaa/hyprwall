@@ -1,21 +1,31 @@
 #!/bin/bash
 
 # Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
 
 Target_dir="$HOME/.hyprwall"
 Wallpaper_dir="$HOME/Videos/wallpapers"
-STARTUP_FILE="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
-KEYBINDS_FILE="$HOME/.config/hypr/UserConfigs/UserKeybinds.conf"
 Clone_dir="$HOME/hyprwall"
 
 echo -e "${CYAN}Starting Hyprwall installation...${NC}"
 
-# Always start fresh: remove old hyprwall directory
+# Ask user which config layout to use
+echo -e "${YELLOW}Select config layout:${NC}"
+echo "1) UserConfigs (old installation)"
+echo "2) System defaults (new installation)"
+read -p "Enter choice [1/2]: " choice
+
+if [[ "$choice" == "1" ]]; then
+    STARTUP_FILE="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
+    KEYBINDS_FILE="$HOME/.config/hypr/UserConfigs/UserKeybinds.conf"
+    echo -e "${GREEN}Using UserConfigs paths${NC}"
+else
+    STARTUP_FILE="$HOME/.config/hypr/configs/Startup_Apps.conf"
+    KEYBINDS_FILE="$HOME/.config/hypr/config/Keybinds.conf"
+    echo -e "${GREEN}Using System default paths${NC}"
+fi
+
+# Clean old ~/.hyprwall
 [ -d "$Target_dir" ] && rm -rf "$Target_dir" && echo -e "${YELLOW}Removed old $Target_dir${NC}"
 mkdir -p "$Target_dir"
 
@@ -41,11 +51,9 @@ LIVE_SECTION="# live wallpaper stuff"
 STARTUP_LINE="exec-once = $HOME/.hyprwall/run_wallpaper.sh"
 
 if grep -Fxq "$LIVE_SECTION" "$STARTUP_FILE"; then
-    # Section exists: replace any old startup line with the new one
     sed -i "/$LIVE_SECTION/,+1c\\$LIVE_SECTION\n$STARTUP_LINE" "$STARTUP_FILE"
     echo -e "${YELLOW}Replaced existing live wallpaper section with new startup line${NC}"
 else
-    # Section not present: append at bottom
     echo -e "\n$LIVE_SECTION\n$STARTUP_LINE" >> "$STARTUP_FILE"
     echo -e "${GREEN}Created live wallpaper section and added startup line${NC}"
 fi
@@ -79,11 +87,11 @@ echo -e "Use ${RED}Ctrl+S${NC} to save and ${RED}Ctrl+X${NC} to exit Nano."
 echo -e "${CYAN}--------------------------------------------------${NC}"
 
 # Open Startup_Apps.conf in Kitty + Nano for manual editing
-kitty -e bash -c "cd $HOME/.config/hypr/UserConfigs && nano Startup_Apps.conf"
+kitty -e bash -c "cd $(dirname "$STARTUP_FILE") && nano $(basename "$STARTUP_FILE")"
 
 # Ask user if they want to reboot
-read -p "Do you want to reboot now? (y/n): " choice
-if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+read -p "Do you want to reboot now? (y/n): " reboot_choice
+if [[ "$reboot_choice" == "y" || "$reboot_choice" == "Y" ]]; then
     echo -e "${RED}Rebooting system...${NC}"
     sudo reboot
 else
