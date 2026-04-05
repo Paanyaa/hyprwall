@@ -1,7 +1,8 @@
 #!/bin/bash
 
-WALLPAPER_DIR="$HOME/Videos"
+WALLPAPER_DIR="$HOME/Videos/wallpapers"
 MONITOR="eDP-2"
+STATE_FILE="$HOME/.hyprwall/Wallpaper_Dir.txt"
 
 run_wallpaper() {
     local file="$1"
@@ -13,6 +14,7 @@ stop_wallpaper() {
 }
 
 if pgrep -x mpvpaper > /dev/null; then
+    echo "haha"
     stop_wallpaper
 else
     entries=""
@@ -27,6 +29,7 @@ else
     selected=$(echo -en "$entries" | rofi -dmenu -p "Select Wallpaper" -show-icons -theme-str 'element-icon { size: 96; orientation: east; }')
     if [ -n "$selected" ]; then
         run_wallpaper "$WALLPAPER_DIR/$selected"
+	echo "$selected" > "$STATE_FILE"
     fi
 fi
 

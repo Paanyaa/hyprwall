@@ -1,6 +1,0 @@
-#!/bin/bash
-
-mkdir ~/Videos/wallpapers
-
-#sed -i '/# wallpaper stuff/,/^[[:space:]]*$/ s/^[^#]/#&/' /home/panyaa/.config/hypr/UserConfigs/Startup_Apps.conf
-#sed -i '/# wallpaper stuff/,/^[[:space:]]*$/ {/^[[:space:]]*$/ i exec-once = mpvpaper -o "no-audio --loop" eDP-2 ~/Videos/newwall.mp4}' ~/.config/hypr/startup.conf
