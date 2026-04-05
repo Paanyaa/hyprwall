@@ -10,8 +10,8 @@ echo -e "${CYAN}Starting Hyprwall uninstall...${NC}"
 
 # Ask user which config layout to use
 echo -e "${YELLOW}Select config layout:${NC}"
-echo "1) UserConfigs (old installation)"
-echo "2) System defaults (new installation)"
+echo "1) Old installation (UserConfigs)"
+echo "2) Custom path (type manually)"
 read -p "Enter choice [1/2]: " choice
 
 if [[ "$choice" == "1" ]]; then
@@ -19,9 +19,11 @@ if [[ "$choice" == "1" ]]; then
     KEYBINDS_FILE="$HOME/.config/hypr/UserConfigs/UserKeybinds.conf"
     echo -e "${GREEN}Using UserConfigs paths${NC}"
 else
-    STARTUP_FILE="$HOME/.config/hypr/configs/Startup_Apps.conf"
-    KEYBINDS_FILE="$HOME/.config/hypr/config/Keybinds.conf"
-    echo -e "${GREEN}Using System default paths${NC}"
+    read -p "Enter full path for Startup_Apps.conf: " STARTUP_FILE
+    read -p "Enter full path for Keybinds.conf: " KEYBINDS_FILE
+    echo -e "${GREEN}Using custom paths:${NC}"
+    echo "Startup apps → $STARTUP_FILE"
+    echo "Keybinds     → $KEYBINDS_FILE"
 fi
 
 # Remove ~/.hyprwall directory
@@ -30,9 +32,9 @@ if [ -d "$Target_dir" ]; then
     echo -e "${YELLOW}Removed $Target_dir${NC}"
 fi
 
-# Replace our live wallpaper startup line with direct mpvpaper call for minecraft.mp4 on eDP-2
+# Replace live wallpaper startup line with direct mpvpaper call for minecraft.mp4 on eDP-2
 STARTUP_LINE="exec-once = $HOME/.hyprwall/run_wallpaper.sh"
-REPLACEMENT_LINE="exec-once = mpvpaper -o \"load-scripts=no no-audio --loop\" eDP-2 Videos/minecraft.mp4"
+REPLACEMENT_LINE="#exec-once = mpvpaper -o \"load-scripts=no no-audio --loop\" eDP-2 Videos/minecraft.mp4"
 
 if grep -Fxq "$STARTUP_LINE" "$STARTUP_FILE"; then
     sed -i "s|$STARTUP_LINE|$REPLACEMENT_LINE|" "$STARTUP_FILE"
