@@ -22,7 +22,7 @@ cp run_wallpaper.sh "$Target_dir/"
 chmod +x "$Target_dir/run_wallpaper.sh"
 
 # install toggle-live-wallpaper globally
-sudo cp toggle-live-wallpaper.sh /usr/local/bin/toggle-live-wallpaper
+sudo cp toggle-live-wallpaper /usr/local/bin/toggle-live-wallpaper
 sudo chmod +x /usr/local/bin/toggle-live-wallpaper
 
 # path to Startup_Apps.conf
