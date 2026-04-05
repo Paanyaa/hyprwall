@@ -14,7 +14,7 @@ mkdir -p "$Target_dir"
 [ ! -d "$Wallpaper_dir" ] && mkdir -p "$Wallpaper_dir" && echo "Created $Wallpaper_dir"
 
 # Default wallpaper state file
-echo "glitch_girl.mp4" > "$Target_dir/Wallpaper_Dir.txt"
+echo "minecraft.mp4" > "$Target_dir/Wallpaper_Dir.txt"
 
 # Copy run_wallpaper.sh into ~/.hyprwall
 cp run_wallpaper.sh "$Target_dir/"
