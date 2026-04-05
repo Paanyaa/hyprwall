@@ -61,10 +61,18 @@ else
 fi
 
 # Add keybind for toggle-live-wallpaper
-KEYBIND_LINE="bind = \$mainMod CTRL, W, exec, /usr/local/bin/toggle-live-wallpaper"
-if ! grep -Fxq "$KEYBIND_LINE" "$KEYBINDS_FILE"; then
-    echo "$KEYBIND_LINE" >> "$KEYBINDS_FILE"
-    echo -e "${GREEN}Added toggle-live-wallpaper keybind${NC}"
+KEYBIND_LINE='bind = $mainMod CTRL, W, exec, /usr/local/bin/toggle-live-wallpaper'
+
+# Only append if not already present
+if [ -f "$KEYBINDS_FILE" ]; then
+    if ! grep -Fq "toggle-live-wallpaper" "$KEYBINDS_FILE"; then
+        echo "$KEYBIND_LINE" >> "$KEYBINDS_FILE"
+        echo -e "${GREEN}Appended toggle-live-wallpaper keybind at bottom${NC}"
+    else
+        echo -e "${YELLOW}Keybind already exists, skipping append${NC}"
+    fi
+else
+    echo -e "${RED}Keybinds file not found: $KEYBINDS_FILE${NC}"
 fi
 
 # Copy minecraft.mp4 into wallpapers directory if present
