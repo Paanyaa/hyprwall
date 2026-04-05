@@ -27,7 +27,7 @@ sudo chmod +x /usr/local/bin/toggle-live-wallpaper
 
 # path to Startup_Apps.conf
 STARTUP_FILE="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
-STARTUP_LINE="exec-once = $HOME/.hyprwall/run_wallpaper.sh"
+STARTUP_LINE="exec-once = $HOME/.hyprwall/run_wallpaper.sh #custom live wallpaper things"
 
 # 1. Comment out all non-comment lines in the "# wallpaper stuff" section
 sed -i '/# wallpaper stuff/,/^[[:space:]]*$/ s/^[^#]/#&/' "$STARTUP_FILE"
