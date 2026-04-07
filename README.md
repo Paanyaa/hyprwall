@@ -57,6 +57,6 @@ For new config layout you need to mention paths as done in **STEP 2** and enter 
 ![Comment](.images/Comment.png)
 
 9. Reboot to make changes.
-![Summary](Summary_uni.png)
+![Summary](.images/Summary_uni.png)
 
 
