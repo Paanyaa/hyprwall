@@ -19,7 +19,7 @@ chmod +x install.sh
 2. Now script will ask weather your Hyprland is old or new(new one has 2 different config files for Startup Apps and KeyBindings). *Old user can directly skip to step 4*.
 If u have new hyprland **[ *SHIFT + SUPER + E* ]** to open **Hyprland Settings**.
 
-![Select Config](/home/panyaa/Pictures/Screenshots/Select_config.png)
+![Select Config](.images/Select_config.png)
 
 3. *( only for new hyprland users)*Now copy paste Default Startup Apps and Keybinding pathon terminal and press *ENTER*.
 
