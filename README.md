@@ -1,3 +1,3 @@
-### *This is custom basic live wallpaper manager for* **Hyprland** *only*.
+ *This is custom basic live wallpaper manager for* **Hyprland** *only*.
 
 
