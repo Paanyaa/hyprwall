@@ -19,12 +19,14 @@ if [[ "$choice" == "1" ]]; then
     STARTUP_FILE="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
     KEYBINDS_FILE="$HOME/.config/hypr/UserConfigs/UserKeybinds.conf"
     echo -e "${GREEN}Using UserConfigs paths${NC}"
+    skip_edit_prompt=true
 else
     read -p "Enter full path for Startup_Apps.conf: " STARTUP_FILE
     read -p "Enter full path for Keybinds.conf: " KEYBINDS_FILE
     echo -e "${GREEN}Using custom paths:${NC}"
     echo "Startup apps → $STARTUP_FILE"
     echo "Keybinds     → $KEYBINDS_FILE"
+    skip_edit_prompt=false
 fi
 
 # Clean old ~/.hyprwall
@@ -87,21 +89,21 @@ fi
 echo -e "${CYAN}--------------------------------------------------${NC}"
 echo -e "${GREEN}Install complete.${NC}"
 echo -e "${CYAN}--------------------------------------------------${NC}"
-echo -e "${YELLOW}IMPORTANT:${NC} The upstream '### wallpaper stuff ###' section is still active."
-echo -e "To prevent conflicts, you should comment out those lines."
-echo -e "${CYAN}A new Kitty terminal will now open with Startup_Apps.conf so you can edit it.${NC}"
-echo -e "Use ${RED}Ctrl+S${NC} to save and ${RED}Ctrl+X${NC} to exit Nano."
-echo -e "${CYAN}--------------------------------------------------${NC}"
 
-# Ask user if they want to open Startup_Apps.conf
-read -p "Do you want to open Startup_Apps.conf for editing now? (Y/n): " edit_choice
-edit_choice=${edit_choice:-Y}   # Default to Y if empty
-if [[ "$edit_choice" == "y" || "$edit_choice" == "Y" ]]; then
-    echo -e "${CYAN}Opening Startup_Apps.conf in Kitty + Nano...${NC}"
-    echo -e "Use ${RED}Ctrl+S${NC} to save and ${RED}Ctrl+X${NC} to exit Nano."
-    kitty -e bash -c "cd $(dirname "$STARTUP_FILE") && nano $(basename "$STARTUP_FILE")"
-else
-    echo -e "${YELLOW}Skipped opening Startup_Apps.conf${NC}"
+# Ask user if they want to open Startup_Apps.conf (only for custom path)
+if [[ "$skip_edit_prompt" == false ]]; then
+    echo -e "${YELLOW}IMPORTANT:${NC} The upstream '### wallpaper stuff ###' section is still active."
+    echo -e "To prevent conflicts, you should comment out those lines."
+    echo -e "${CYAN}--------------------------------------------------${NC}"
+    read -p "Do you want to open Startup_Apps.conf for editing now? (Y/n): " edit_choice
+    edit_choice=${edit_choice:-Y}   # Default to Y if empty
+    if [[ "$edit_choice" == "y" || "$edit_choice" == "Y" ]]; then
+        echo -e "${CYAN}Opening Startup_Apps.conf in Kitty + Nano...${NC}"
+        echo -e "Use ${RED}Ctrl+S${NC} to save and ${RED}Ctrl+X${NC} to exit Nano."
+        kitty -e bash -c "cd $(dirname "$STARTUP_FILE") && nano $(basename "$STARTUP_FILE")"
+    else
+        echo -e "${YELLOW}Skipped opening Startup_Apps.conf${NC}"
+    fi
 fi
 
 # Ask user if they want to reboot
