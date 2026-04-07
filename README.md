@@ -17,4 +17,4 @@ chmod +x install.sh
 ```
 
 2. Now script will ask weather your Hyprland is old or new(new one has 2 different config files for Startup Apps and KeyBindings)
-If u have new hyprland ```bash
+If u have new hyprland **[ *CRTL + SUPER + E* ]** to open **Hyprland Settings**.
