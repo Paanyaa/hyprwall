@@ -1,4 +1,5 @@
  *This is custom basic live wallpaper manager for* **Hyprland** *only*.
+*Default key binding for hyprwall is SHIFT + SUPER + W. It can we used for both stopping and restarting live wallpaper.*
 
 ![Default](.images/default.png)
 
