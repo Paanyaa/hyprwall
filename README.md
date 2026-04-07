@@ -54,9 +54,9 @@ For new config layout you need to mention paths as done in **STEP 2** and enter 
 ![Select Config](.images/Select_config_uni.png)
 
 8. Now *exec-once = mpvpaper -o "load-scripts=no no-audio --loop" eDP-2 Videos/minecraft.mp4* will be set as ur deafult for live wallpaper u can comment it by pressing *ENTER*.
-![Comment](.images/Comment)
+![Comment](.images/Comment.png)
 
 9. Reboot to make changes.
-![Summary](Summary_uni)
+![Summary](Summary_uni.png)
 
 
