@@ -69,6 +69,17 @@ echo -e "${RED}$REPLACEMENT_LINE${NC}"
 echo -e "to keep minecraft.mp4 running as wallpaper even after uninstall."
 echo -e "${CYAN}--------------------------------------------------${NC}"
 
+# Ask user if they want to open Startup_Apps.conf
+read -p "Do you want to open Startup_Apps.conf for editing now? (Y/n): " edit_choice
+edit_choice=${edit_choice:-Y}   # Default to Y if empty
+if [[ "$edit_choice" == "y" || "$edit_choice" == "Y" ]]; then
+    echo -e "${CYAN}Opening Startup_Apps.conf in Kitty + Nano...${NC}"
+    echo -e "Use ${RED}Ctrl+S${NC} to save and ${RED}Ctrl+X${NC} to exit Nano."
+    kitty -e bash -c "cd $(dirname "$STARTUP_FILE") && nano $(basename "$STARTUP_FILE")"
+else
+    echo -e "${YELLOW}Skipped opening Startup_Apps.conf${NC}"
+fi
+
 # Ask user if they want to reboot
 read -p "Do you want to reboot now? (y/n): " reboot_choice
 if [[ "$reboot_choice" == "y" || "$reboot_choice" == "Y" ]]; then

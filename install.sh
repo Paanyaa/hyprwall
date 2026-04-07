@@ -93,8 +93,16 @@ echo -e "${CYAN}A new Kitty terminal will now open with Startup_Apps.conf so you
 echo -e "Use ${RED}Ctrl+S${NC} to save and ${RED}Ctrl+X${NC} to exit Nano."
 echo -e "${CYAN}--------------------------------------------------${NC}"
 
-# Open Startup_Apps.conf in Kitty + Nano for manual editing
-kitty -e bash -c "cd $(dirname "$STARTUP_FILE") && nano $(basename "$STARTUP_FILE")"
+# Ask user if they want to open Startup_Apps.conf
+read -p "Do you want to open Startup_Apps.conf for editing now? (Y/n): " edit_choice
+edit_choice=${edit_choice:-Y}   # Default to Y if empty
+if [[ "$edit_choice" == "y" || "$edit_choice" == "Y" ]]; then
+    echo -e "${CYAN}Opening Startup_Apps.conf in Kitty + Nano...${NC}"
+    echo -e "Use ${RED}Ctrl+S${NC} to save and ${RED}Ctrl+X${NC} to exit Nano."
+    kitty -e bash -c "cd $(dirname "$STARTUP_FILE") && nano $(basename "$STARTUP_FILE")"
+else
+    echo -e "${YELLOW}Skipped opening Startup_Apps.conf${NC}"
+fi
 
 # Ask user if they want to reboot
 read -p "Do you want to reboot now? (y/n): " reboot_choice
