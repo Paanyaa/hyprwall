@@ -25,6 +25,6 @@ If u have new hyprland **[ *SHIFT + SUPER + E* ]** to open **Hyprland Settings**
 
 4. Now enter sudo password, it will add **toggle-live-wallpaper** to your */usr/local/bin* and keybinding for it as **[ *CTRL SUPER W* ]** which will let you to change wallpaper.
 
-![Global Set](.images/Golbal_set.png)
+![Global Set](.images/Global_set.png)
 After pressing **[ *CTRL SUPER W* ]** will show all live wallpaper present in *~/Videos/wallpapers*.
 ![Change Wallpaper](.images/Change_wallpaper.png)
